@@ -13,8 +13,37 @@ class AdminChartPlugin
 
   function __construct()
   {
+    add_action('rest_api_init', array($this, 'register_api'));
     add_action('wp_dashboard_setup', array($this, 'load_widget'));
     add_action('admin_menu', array($this, 'load_settings_page'));
+  }
+
+
+  function register_api()
+  {
+    register_rest_route('admin-chart/v1', 'data', array(
+      'methods' => WP_REST_SERVER::READABLE,
+      'callback' => array($this, 'get_chart_data')
+    ));
+  }
+
+  function get_chart_data($data)
+  {
+    if (is_numeric(($data['days']))) {
+      $total = 0;
+      $result = [];
+      $days = $data['days'];
+      $weeks = floor($days / 7);
+      if ($days % 7) $weeks = $weeks + 1;
+      while ($total < $weeks) {
+        $total = $total + 1;
+        $week = explode(",", get_option("chart_admin_week_" . $total));
+        $result = array_merge($result, $week);
+      }
+      $result = array_slice($result, 0, $days);
+      return new WP_REST_Response($result);
+    }
+    return new WP_REST_Response(null, 404);
   }
 
 
@@ -33,7 +62,7 @@ class AdminChartPlugin
       true
     );
   }
-  
+
   function widget_title()
   {
     echo '<div id="admin-chart-widget"></div>';
