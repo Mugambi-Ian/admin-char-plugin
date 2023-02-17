@@ -15,14 +15,14 @@ the values are stored in the wp_options table and when the admin visits the dash
 <img width="553" alt="image" src="https://user-images.githubusercontent.com/46242846/219560907-24d1abd4-bc8e-4fbc-914d-9ede05f129a9.png">
 
 
-#Solution 
+## Solution 
 
 The plugin:
 - implements a rest api that returns an array of values for the days requested. ie request days=5 will return an array of the 1st five values from week 1.
 - implements a widget on the dashboard to print a chart for the selected days.
 - implements an options page to act as the settings page for the plugin.
 
-#Video link
+### Video link
 
 
 
