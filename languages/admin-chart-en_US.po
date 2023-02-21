@@ -1,0 +1,37 @@
+msgid ""
+msgstr ""
+"dummyProject-Id-Version: Admin Chart\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: Ian Mugambi\n"
+"Language-Team: English (United States)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-02-21 05:39+0000\n"
+"PO-Revision-Date: 2023-02-21 15:42+0000\n"
+"Language: en_US\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.6.3; wp-6.1.1\n"
+"X-Domain: admin-chart\n"
+"Project-Id-Version: "
+
+#. Name of the plugin
+msgid "Admin Chart"
+msgstr "Admin Chart"
+
+# title
+msgid "Admin Chart Settings"
+msgstr "Admin Chart Settings"
+
+#. Days
+msgid "Days"
+msgstr "Days"
+
+#. Graph Widget
+msgid "Graph Widget"
+msgstr "Graph Widget"
+
+#. Week
+msgid "Week"
+msgstr "Week"
