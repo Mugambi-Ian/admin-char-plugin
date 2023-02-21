@@ -1,6 +1,9 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect, Fragment } from 'react';
 import ReactDOM from 'react-dom';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import Loader from './components/Loader';
+import Chart from './components/LineChart';
+import Header from './components/Header';
+import Empty from './components/Empty';
 
 
 
@@ -8,11 +11,11 @@ const AdminChart = () => {
   const [loading, setLoading] = useState(true);
   const [chartData, setChartData] = useState([]);
 
-  const loadData = useCallback(async (days) => {
+  const loadData = useCallback(async (days: number) => {
     setChartData([])
     const data = await fetch('/wp-json/admin-chart/v1/data?days=' + days)
     let values = await data.json()
-    values = values.map((v, i) => {
+    values = values.map((v: string, i: number) => {
       return {
         day: i + 1,
         value: parseInt(v)
@@ -28,7 +31,6 @@ const AdminChart = () => {
     })
   }, [])
 
-
   const onChange = async (e) => {
     console.log(e.target.value)
     setLoading(true)
@@ -36,33 +38,16 @@ const AdminChart = () => {
     setLoading(false);
   }
 
-
+  const isEmpty = chartData.length === 0
   return (
-    <div>
-      <div style={{ display: "flex", width: "100%" }}>
-        <h2 style={{ flex: 1 }}>Graph Widget</h2>
-        <select name="chart-admin-days" onChange={onChange} defaultValue={7}>
-          <option value={7}>7 Days</option>
-          <option value={15}>15 Days</option>
-          <option value={30}>30 Days</option>
-        </select>
-      </div>
-      {chartData && <ResponsiveContainer width="100%" height={300}>
-        <LineChart
-          data={chartData}
-          margin={{
-            top: 40
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="day" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="value" stroke="#82ca9d" />
-        </LineChart>
-      </ResponsiveContainer>}
-      {loading && <p className='loading-content'></p>}
+    <div className="wrap relative">
+      <Header onChange={onChange} />
+      {loading && <Loader />}
+      {!loading &&
+        <Fragment>
+          {isEmpty && <Empty />}
+          {!isEmpty && <Chart chartData={chartData} />}
+        </Fragment>}
     </div>
   );
 };
